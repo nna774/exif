@@ -36,7 +36,6 @@ import "C"
 
 import (
 	"errors"
-	"fmt"
 	"runtime"
 	"strings"
 	"unsafe"
