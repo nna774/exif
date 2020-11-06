@@ -126,7 +126,7 @@ func (d *Data) Parse() error {
 
 	exifData := C.exif_loader_get_data(d.exifLoader)
 	if exifData == nil {
-		return fmt.Errorf(ErrNoExifData.Error(), "")
+		return ErrNoExifData
 	}
 
 	defer func() {
