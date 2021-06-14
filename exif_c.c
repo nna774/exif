@@ -110,7 +110,7 @@ exif_stack_t* exif_dump(ExifData* data) {
 
 void show_log(ExifLog *log, ExifLogCode code, const char *domain, const char *format, va_list args, void* _) {
 	printf("domain %s: %s: %s\n  ", domain, exif_log_code_get_title(code),	exif_log_code_get_message (code));
-	printf(format, args);
+	vprintf(format, args);
 	puts("");
 }
 
