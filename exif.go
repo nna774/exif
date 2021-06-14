@@ -44,8 +44,8 @@ import (
 
 // Error messages.
 var (
-	ErrNoExifData      = errors.New(`No EXIF data found.`)
-	ErrFoundExifInData = errors.New(`Found EXIF header. OK to call Parse.`)
+	ErrNoExifData      = errors.New(`no EXIF data found`)
+	ErrFoundExifInData = errors.New(`found EXIF header. OK to call Parse`)
 )
 
 // Data stores the EXIF tags of a file.
