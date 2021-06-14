@@ -21,7 +21,7 @@ dnf install -y libexif-devel
 Then grab the exif package with `go get`:
 
 ```
-go get github.com/xiam/exif
+go get github.com/nna774/exif
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ Install the package with `go get` and use `import` to include it in your
 project:
 
 ```
-import "github.com/xiam/exif"
+import "github.com/nna774/exif"
 ```
 
 This is an example on how to read EXIF data from a file:
@@ -40,7 +40,7 @@ package main
 
 import (
   "fmt"
-  "github.com/xiam/exif"
+  "github.com/nna774/exif"
 )
 
 func main() {
