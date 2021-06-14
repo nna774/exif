@@ -27,11 +27,13 @@ package exif
 #include <stdlib.h>
 #include <libexif/exif-data.h>
 #include <libexif/exif-loader.h>
+#include <libexif/exif-log.h>
 #include "_cgo/types.h"
 
 exif_value_t* pop_exif_value(exif_stack_t *);
 void free_exif_value(exif_value_t* n);
 exif_stack_t* exif_dump(ExifData *);
+void set_exif_log(ExifLog *log);
 */
 import "C"
 
@@ -50,8 +52,10 @@ var (
 
 // Data stores the EXIF tags of a file.
 type Data struct {
-	exifLoader *C.ExifLoader
-	Tags       map[string]string
+	exifLoader     *C.ExifLoader
+	exifLog        *C.ExifLog
+	loggingEnabled bool
+	Tags           map[string]string
 }
 
 // New creates and returns a new exif.Data object.
@@ -111,6 +115,13 @@ func (d *Data) Write(p []byte) (n int, err error) {
 		d.exifLoader = C.exif_loader_new()
 		runtime.SetFinalizer(d, (*Data).cleanup)
 	}
+	if d.loggingEnabled && d.exifLog == nil {
+		d.exifLog = C.exif_log_new()
+		C.exif_loader_log(d.exifLoader, d.exifLog)
+		C.set_exif_log(d.exifLog)
+		C.exif_log_ref(d.exifLog)
+		// cleanup will be defered by above
+	}
 
 	res := C.exif_loader_write(d.exifLoader, (*C.uchar)(unsafe.Pointer(&p[0])), C.uint(len(p)))
 
@@ -141,4 +152,18 @@ func (d *Data) cleanup() {
 		C.exif_loader_unref(d.exifLoader)
 		d.exifLoader = nil
 	}
+	if d.exifLog != nil {
+		C.exif_log_unref(d.exifLog)
+		d.exifLog = nil
+	}
+}
+
+type LoggingOption struct{}
+
+func (d *Data) EnableLogging(opt *LoggingOption) {
+	d.loggingEnabled = true
+}
+
+func (d *Data) DisableLogging() {
+	d.loggingEnabled = false
 }
