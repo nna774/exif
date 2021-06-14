@@ -103,4 +103,4 @@ This is Open Source released under the terms of the MIT License:
 > OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 > WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: http://libexif.sourceforge.net/
+[1]: https://libexif.github.io/
